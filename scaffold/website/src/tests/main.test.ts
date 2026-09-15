@@ -1,0 +1,99 @@
+import { describe, it, expect, beforeEach } from 'vitest'
+
+describe('main application flow', () => {
+  beforeEach(() => {
+    localStorage.clear()
+    
+    // Set up standard mock DOM nodes so main.ts can find everything on load/interaction
+    document.body.innerHTML = `
+      <div class="container">
+        <header>
+          <h1>My Task Manager</h1>
+          <div class="language-selector">
+            <button id="lang-en" class="active">English</button>
+            <button id="lang-fr">Français</button>
+          </div>
+        </header>
+
+        <main>
+          <section class="add-task">
+            <h2>Add New Task</h2>
+            <form id="task-form">
+              <input type="text" id="task-input" placeholder="Enter task description" required>
+              <select id="priority-select">
+                <option value="low">Low Priority</option>
+                <option value="medium">Medium Priority</option>
+                <option value="high">High Priority</option>
+              </select>
+              <button type="submit">Add Task</button>
+            </form>
+          </section>
+
+          <section class="task-list">
+            <h2>Your Tasks</h2>
+            <div class="filter-buttons">
+              <button class="filter-btn active" data-filter="all">All Tasks</button>
+              <button class="filter-btn" data-filter="active">Active</button>
+              <button class="filter-btn" data-filter="completed">Completed</button>
+            </div>
+            <ul id="tasks"></ul>
+            <div class="stats">
+              <p>Total tasks: <span id="total-count">0</span></p>
+              <p>Completed: <span id="completed-count">0</span></p>
+            </div>
+          </section>
+        </main>
+
+        <footer>
+          <p>Built with TypeScript • 2026</p>
+        </footer>
+      </div>
+    `
+  })
+
+  it('should initialize and register event listeners', async () => {
+    // Dynamically import main.ts to execute its top-level init()
+    await import('../main')
+
+    // Expect initial state elements to be loaded
+    const title = document.querySelector('header h1')
+    expect(title?.textContent).toBe('My Task Manager')
+
+    // Click language switcher French
+    const langFrBtn = document.getElementById('lang-fr') as HTMLButtonElement
+    expect(langFrBtn).toBeDefined()
+    langFrBtn?.click()
+
+    // Title should update to French
+    expect(title?.textContent).toBe('Mon Gestionnaire de Tâches')
+    expect(langFrBtn?.classList.contains('active')).toBe(true)
+
+    // Switch back to English
+    const langEnBtn = document.getElementById('lang-en') as HTMLButtonElement
+    langEnBtn?.click()
+    expect(title?.textContent).toBe('My Task Manager')
+    expect(langEnBtn?.classList.contains('active')).toBe(true)
+
+    // Submit the form to add a new task
+    const form = document.getElementById('task-form') as HTMLFormElement
+    const input = document.getElementById('task-input') as HTMLInputElement
+    const select = document.getElementById('priority-select') as HTMLSelectElement
+
+    input.value = 'New Integration Task'
+    select.value = 'high'
+
+    // Submit form
+    form.dispatchEvent(new Event('submit'))
+
+    // Verify task is added and input is cleared
+    expect(input.value).toBe('')
+    const taskItems = document.querySelectorAll('.task-item')
+    expect(taskItems).toHaveLength(1)
+    expect(taskItems[0].querySelector('.task-text')?.textContent).toBe('New Integration Task')
+
+    // Click filter active button
+    const activeFilterBtn = document.querySelector('.filter-btn[data-filter="active"]') as HTMLButtonElement
+    activeFilterBtn?.click()
+    expect(activeFilterBtn?.classList.contains('active')).toBe(true)
+  })
+})
