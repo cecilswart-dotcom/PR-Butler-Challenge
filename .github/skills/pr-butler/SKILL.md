@@ -42,14 +42,29 @@ The PR Butler automates the complete pre-commit checklist for web projects, ensu
 ### Step 3: Test Automation
 
 <!-- Describe how to run tests, generate missing test cases, achieve >80% coverage -->
+1. Change directory to scaffold/website and run the existing test suite with npm run test.
+2. Review the test output and identify any failing cases.
+3. Add or extend tests to cover all TypeScript source files under scaffold/website/src.
 
 ### Step 4: Documentation Updates
 
 <!-- Describe how to add docstrings, update README.md, generate CHANGELOG.md and PR_REQUEST.md -->
+1. Add JSDoc/TSDoc comments to all public functions in scaffold/website/src/.
+2. Update scaffold/website/README.md by adding sections for:
+   Features describing the app functionality
+   Testing with install and command usage 
+   Contributing with guidance for submitting fixes and PRs
 
 ### Step 5: Quality Gates
 
 <!-- Describe the quality gates to enforce before proceeding -->
+1. After completing Steps 1–4, evaluate the final output against the quality gates.
+2. Run npm run test:coverage and verify that overall coverage is at least 80%.
+3. Confirm that npm run test completes successfully and all tests pass.
+4. Validate that there are no remaining critical lint or syntax issues. If no dedicated linter exists, ensure there are no obvious TypeScript or formatting problems.
+5. If any gate fails, stop and report the failure immediately.
+6. Document the failure reason clearly, including the failing tests, coverage percentage, or lint/syntax issues.
+7. Only proceed to Step 6 after all quality gates pass.
 
 ### Step 6: PR Preparation
 
