@@ -69,6 +69,10 @@ The PR Butler automates the complete pre-commit checklist for web projects, ensu
 ### Step 6: PR Preparation
 
 <!-- Describe how to generate the conventional commit message and finalize deliverables -->
+Review all changed files 
+Generate a conventional commit message summarizing the change
+Create PR_REQUEST.md with all the changes at the repository root 
+Create CHANGELOG.md in the root. It should summarize the fixes, updates, code cleanup, new tests, and documentation improvements.
 
 ---
 
