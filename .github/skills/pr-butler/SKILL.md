@@ -30,9 +30,14 @@ The PR Butler automates the complete pre-commit checklist for web projects, ensu
 2. Compare the 2 files to identify missing values
 3. Add missing values in the `scaffold/website/src/translations/fr.json` file by translating values from `scaffold/website/src/translations/en.json` to french.
 4. Update the translation loading and toggling mechanism inside `scaffold/website/src/main.ts` (with a helper `applyTranslations`) and `scaffold/website/src/taskManager.ts`. Clicking language switch buttons must dynamically update all hardcoded static labels and task priority badges in the DOM without requiring a full page refresh.
+5. Inspect `*.html` and `*.ts` files in scaffold/website for hardcoded UI strings. Add or preserve translation hooks to allow switching between English and French. Update the static labels, placeholders, select options, filters, stats labels, footer text, task priority badges, and buttons.
+
 ### Step 2: Code Cleanup
 
 <!-- Describe how to format code and fix lint violations -->
+1. Apply consistent formatting to all source files under scaffold/website/src and scaffold/website/src/tests.
+2. Repair obvious formatting and style issues in TypeScript files, even when no dedicated lint config is present.
+3. If a linter or auto-fix tool is available, run it and apply auto-fixable changes.
 
 ### Step 3: Test Automation
 
