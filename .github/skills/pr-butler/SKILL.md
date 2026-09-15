@@ -27,7 +27,9 @@ The PR Butler automates the complete pre-commit checklist for web projects, ensu
 
 <!-- Describe how to detect missing French translations and generate them -->
 1. Read `scaffold/website/src/translations/en.json` and `scaffold/website/src/translations/fr.json`.
-
+2. Compare the 2 files to identify missing values
+3. Add missing values in the `scaffold/website/src/translations/fr.json` file by translating values from `scaffold/website/src/translations/en.json` to french.
+4. 
 ### Step 2: Code Cleanup
 
 <!-- Describe how to format code and fix lint violations -->
